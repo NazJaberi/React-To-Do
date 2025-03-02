@@ -1,9 +1,17 @@
 import './App.css';
+import Header from './Components/Header'
+import Main from './Components/Main'
+
 
 function App() {
   return (
-    <div>
-Clean up test
+    <div className="App">
+      <Header>
+        <h1>Hi</h1>
+      </Header>
+      <Main>
+
+      </Main>
     </div>
   );
 }
