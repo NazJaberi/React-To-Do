@@ -1,0 +1,1 @@
+export const calanderItems = ['today', 'next 7 days', 'all days']
