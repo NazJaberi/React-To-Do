@@ -198,6 +198,8 @@
 .calendar .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .calendar .header .title {
@@ -221,18 +223,26 @@
   align-items: center;
   justify-content: center;
 }
+
 .calendar .header .btns span:hover {
   background-color: #ebebeb;
   transition: all 300ms ease-in-out;
 }
 
 .calendar .items {
-  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-left: 2rem;
 }
 
-.calendar .items .items {
-  padding: 2.5rem;
-  margin: 5px;
+.calendar .items .item {
+  padding: 0.5rem;
   font-size: 1rem;
   cursor: pointer;
+  border-radius: 4px;
+}
+
+.calendar .items .item:hover {
+  background-color: #f5f5f5;
 }
