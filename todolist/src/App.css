@@ -468,8 +468,7 @@
   margin-right: 10px;
 }
 
-/*EditTodo */
-
+/* EditTodo */
 .EditTodo {
   width: 450px;
   height: 80%;
@@ -480,14 +479,82 @@
   transform: translateY(-50%);
   border-radius: 4px;
   opacity: 0.9;
-  padding: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .EditTodo .header {
-  margin: 1rem 0.5rem;
+  padding: 1rem;
   font-size: 1.2rem;
   font-weight: bold;
-  padding-bottom: 2px;
   border-bottom: 1px solid #eeeeee;
+}
+
+.EditTodo .container {
+  padding: 1rem;
+}
+
+/* Add these styles for the project selection */
+.pick-project {
+  padding: 1rem 0;
+}
+
+.pick-project .title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.pick-project .projects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pick-project .projects .project {
+  padding: 0.5rem 1rem;
+  border: 1px solid #0080ff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pick-project .projects .project:hover {
+  background-color: #f0f9ff;
+}
+
+.pick-project .projects .project.active {
+  background-color: #0080ff;
+  color: white;
+}
+
+/* Additional form styling */
+.TodoForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.TodoForm .text input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+}
+
+.TodoForm .remind,
+.TodoForm .pick-day .title,
+.TodoForm .pick-time .title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.TodoForm input[type="date"],
+.TodoForm input[type="time"] {
+  padding: 0.5rem;
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+  margin-top: 0.5rem;
 }
