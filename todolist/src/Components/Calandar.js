@@ -1,6 +1,6 @@
 import react, { useContext } from 'react'
 import { CalendarDate, CaretUp } from 'react-bootstrap-icons'
-import { calanderItems } from '../constants'
+import { calendarItems } from '../constants'
 import { TodoContext } from '../contex'
 
 function Calandar(){
@@ -20,7 +20,7 @@ function Calandar(){
             </div>
             <div className="items">
                 {
-                    calanderItems.map(item =>
+                    calendarItems.map(item =>
                     <div 
                         className="item" 
                         key={item}
