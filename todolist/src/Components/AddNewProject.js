@@ -1,10 +1,15 @@
 import react from 'react'
+import { Plus } from 'react-bootstrap-icons'
 
 function AddNewProject(){
     return(
-<div className='AddNewProject'>
-AddNewProject
-</div>
+    <div className='AddNewProject'>
+        <div className="add-button">
+            <span>
+                <Plus size="20" />
+            </span>
+        </div>
+    </div>
     )
 }
 
