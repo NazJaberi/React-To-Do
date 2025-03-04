@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TodoForm from './TodoForm';
 import Modal from './Modal'
 import {TodoContext} from '../contex'
@@ -19,6 +19,10 @@ function AddNewTodo(){
     function handleSubmit(e){
 
     }
+
+    useEffect( () => {
+        setTodoProject(selectedProject)
+    }, [selectedProject])
     return(
 
         
