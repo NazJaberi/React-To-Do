@@ -6,9 +6,7 @@ export function useTodos(){
     const [todos, setTodos] = useState([])
 
     useEffect(() => {
-        const todosCollection = collection(db, 'todos')
-        
-        const unsubscribe = onSnapshot(todosCollection, (snapshot) => {
+        const unsubscribe = onSnapshot(collection(db, 'todos'), snapshot => {
             const data = snapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
@@ -17,34 +15,21 @@ export function useTodos(){
         })
 
         return () => unsubscribe()
-    }, []) // Added dependency array
+    }, [])
 
     return todos
 }
 
-export function useProjects(){
+export function useProjects(todos){
     const [projects, setProjects] = useState([])
-    const [todos, setTodos] = useState([]) // Need todos for calculation
 
-    function calculateNumOfTodos(projectName, todos) {
+    function calculateNumOfTodos(projectName, todos){
         return todos.filter(todo => todo.projectName === projectName).length
     }
 
     useEffect(() => {
-        // Subscribe to todos
-        const todosCollection = collection(db, 'todos')
-        const unsubscribeTodos = onSnapshot(todosCollection, (snapshot) => {
-            const todosData = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }))
-            setTodos(todosData)
-        })
-
-        // Subscribe to projects
-        const projectsCollection = collection(db, 'projects')
-        const unsubscribeProjects = onSnapshot(projectsCollection, (snapshot) => {
-            const projectsData = snapshot.docs.map(doc => {
+        const unsubscribe = onSnapshot(collection(db, 'projects'), snapshot => {
+            const data = snapshot.docs.map(doc => {
                 const projectName = doc.data().name
                 return {
                     id: doc.id,
@@ -52,14 +37,11 @@ export function useProjects(){
                     numOfTodos: calculateNumOfTodos(projectName, todos)
                 }
             })
-            setProjects(projectsData)
+            setProjects(data)
         })
 
-        return () => {
-            unsubscribeTodos()
-            unsubscribeProjects()
-        }
-    }, [todos]) 
+        return () => unsubscribe()
+    }, [todos])
 
     return projects
 }
