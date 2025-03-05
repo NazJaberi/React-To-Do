@@ -21,19 +21,19 @@ export function useTodos() {
     return todos
 }
 
-export function useFilterTodos(todos, selectedProject) {  // Fixed parameter name
+export function useFilterTodos(todos, selectedProject) {
     const [filteredTodos, setFilteredTodos] = useState([])
 
     useEffect(() => {
         let data;
-        const todayDateFormated = moment().format('DD/MM/YYYY')
+        const todayDateFormated = moment().format('MM/DD/YYYY')
 
         if (selectedProject === 'today') {
             data = todos.filter(todo => todo.date === todayDateFormated)
         } else if (selectedProject === 'next 7 days') {
             data = todos.filter(todo => {
-                const todoDate = moment(todo.date, 'DD/MM/YYYY')
-                const todayDate = moment(todayDateFormated, 'DD/MM/YYYY')
+                const todoDate = moment(todo.date, 'MM/DD/YYYY')
+                const todayDate = moment(todayDateFormated, 'MM/DD/YYYY')
 
                 const diffDays = todoDate.diff(todayDate, 'days')
 
@@ -42,11 +42,11 @@ export function useFilterTodos(todos, selectedProject) {  // Fixed parameter nam
         } else if (selectedProject === 'all days') {
             data = todos
         } else {
-            data = todos.filter(todo => todo.projectName === selectedProject)  // Fixed filter syntax
+            data = todos.filter(todo => todo.projectName === selectedProject)
         }
 
         setFilteredTodos(data)
-    }, [todos, selectedProject])  // Added selectedProject to dependencies
+    }, [todos, selectedProject])
 
     return filteredTodos
 }
@@ -55,7 +55,9 @@ export function useProjects(todos) {
     const [projects, setProjects] = useState([])
 
     function calculateNumOfTodos(projectName, todos) {
-        return todos.filter(todo => todo.projectName === projectName).length
+        return todos.filter(todo => 
+            todo.projectName === projectName && !todo.checked
+        ).length
     }
 
     useEffect(() => {
@@ -75,4 +77,21 @@ export function useProjects(todos) {
     }, [todos])
 
     return projects
+}
+
+export function useProjectsWithStats(projects, todos) {
+    const [projectsWithStats, setProjectsWithStats] = useState([])
+
+    useEffect(() => {
+        const data = projects.map((project) => ({
+            ...project,
+            numOfTodos: todos.filter(todo => 
+                todo.projectName === project.name && !todo.checked
+            ).length
+        }))
+
+        setProjectsWithStats(data)
+    }, [projects, todos])
+
+    return projectsWithStats
 }
