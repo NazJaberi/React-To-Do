@@ -10,7 +10,6 @@ function User(){
             </div>
             <div className='info'>
                 <p> Nezar Jaberi</p>
-                <a href="#">Logout!</a>
             </div>
         </div>
     )

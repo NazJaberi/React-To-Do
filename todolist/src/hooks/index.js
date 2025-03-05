@@ -29,15 +29,24 @@ export function useFilterTodos(todos, selectedProject) {
         const todayDateFormated = moment().format('MM/DD/YYYY')
 
         if (selectedProject === 'today') {
-            data = todos.filter(todo => todo.date === todayDateFormated)
+            data = todos.filter(todo => {
+                if (!todo.date) return false;
+                return todo.date === todayDateFormated;
+            })
         } else if (selectedProject === 'next 7 days') {
             data = todos.filter(todo => {
-                const todoDate = moment(todo.date, 'MM/DD/YYYY')
-                const todayDate = moment(todayDateFormated, 'MM/DD/YYYY')
+                if (!todo.date) return false;
+                
+                try {
+                    const todoDate = moment(todo.date, 'MM/DD/YYYY');
+                    const todayDate = moment(todayDateFormated, 'MM/DD/YYYY');
 
-                const diffDays = todoDate.diff(todayDate, 'days')
-
-                return diffDays >= 0 && diffDays < 7
+                    const diffDays = todoDate.diff(todayDate, 'days')
+                    return diffDays >= 0 && diffDays < 7;
+                } catch (error) {
+                    console.log('Date parsing error:', todo.date);
+                    return false;
+                }
             })
         } else if (selectedProject === 'all days') {
             data = todos

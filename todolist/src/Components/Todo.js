@@ -1,15 +1,22 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import { ArrowClockwise, CheckCircleFill, Circle, Trash} from 'react-bootstrap-icons'
 import { db } from '../firebase'
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore'  
+import { TodoContext } from '../contex'
 
 function Todo({todo}){
     const [hover, setHover] = useState(false)
+    const {selectedTodo, setSelectedTodo} = useContext(TodoContext)
 
     const deleteTodo = async (todo) => {
         try {
             const todoRef = doc(db, 'todos', todo.id)
             await deleteDoc(todoRef)
+            
+            // Clear selectedTodo if the deleted todo is currently selected
+            if (selectedTodo && selectedTodo.id === todo.id) {
+                setSelectedTodo(null)
+            }
         } catch (error) {
             console.error("Error deleting todo:", error)
             alert('Error deleting todo')
@@ -18,13 +25,11 @@ function Todo({todo}){
 
     const checkTodo = async (todo) => {
         try {
-            // Add console.log to debug
             console.log('Current todo:', todo)
             console.log('Current checked status:', todo.checked)
             
             const todoRef = doc(db, 'todos', todo.id)
             
-            // If checked is undefined, set it to true, otherwise toggle it
             const newCheckedStatus = todo.checked === undefined ? true : !todo.checked
             
             console.log('New checked status:', newCheckedStatus)
@@ -38,9 +43,6 @@ function Todo({todo}){
             alert('Error updating todo')
         }
     }
-
-    // Add console.log to verify todo object
-    console.log('Rendering todo:', todo)
 
     return(
         <div className='Todo'>
@@ -68,7 +70,9 @@ function Todo({todo}){
                         </span>
                     }
                 </div>
-                <div className="text">
+                <div className="text"
+                    onClick={() => setSelectedTodo(todo)}    
+                >
                     <p style={{color : todo.checked ? '#bebebe' : '#000000'}}>
                         {todo.text}
                     </p>
